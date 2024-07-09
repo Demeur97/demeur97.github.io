@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Telegram Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script> 
+</head>
+<body>
+  <div id="user-info"></div>
+
+  <script>
+    // Определяем функцию для получения информации о пользователе
+    function getUserInfo() {
+      // Получаем объект Telegram
+      const telegram = window.Telegram.WebApp;
+
+      // Получаем информацию о пользователе
+      const user = telegram.initData.user;
+
+      // Выводим информацию на экран
+      document.getElementById('user-info').innerHTML = `
+        <p>Ваш ID: ${user.id}</p>
+        <p>Ваше имя: ${user.first_name} ${user.last_name || ''}</p>
+      `;
+    }
+
+    // Вызываем функцию при загрузке страницы
+    window.onload = getUserInfo;
+  </script>
+</body>
+</html>
