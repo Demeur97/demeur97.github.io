@@ -26,6 +26,9 @@
     .then(response => response.json())
     .then(data => {
       document.getElementById('points').innerText = `Your points: ${data.points}`;
+    })
+    .catch(error => {
+      console.error('Error:', error);
     });
 
     document.getElementById('referralButton').addEventListener('click', () => {
