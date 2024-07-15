@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Referral App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <h1>Welcome to Telegram Referral App</h1>
+  <div id="points">Loading...</div>
+  <button id="referralButton">Get Referral Link</button>
+  <input type="text" id="referralLink" readonly>
+  <script>
+    let tg = window.Telegram.WebApp;
+    tg.ready();
+    const user = tg.initDataUnsafe.user;
+
+    fetch('/referral', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId: user.id, referralId: 'some-referral-id' })
+    })
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('points').innerText = `Your points: ${data.points}`;
+    });
+
+    document.getElementById('referralButton').addEventListener('click', () => {
+      const referralLink = `${window.location.origin}/?referralId=${user.id}`;
+      document.getElementById('referralLink').value = referralLink;
+      document.getElementById('referralLink').select();
+      document.execCommand('copy');
+      alert('Referral link copied to clipboard!');
+    });
+  </script>
+</body>
+</html>
