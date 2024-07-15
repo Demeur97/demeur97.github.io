@@ -1,3 +1,6 @@
+import { initUtils } from '@tma.js/sdk';
+const utils = initUtils();
+
 let tg = window.Telegram.WebApp;
 tg.ready();
 const user = tg.initDataUnsafe.user;
@@ -62,3 +65,12 @@ function showPage(pageId) {
   });
   document.getElementById(`nav${pageId.charAt(0).toUpperCase() + pageId.slice(1)}`).classList.add('active');
 }
+
+// Новый код для пересылки реферальной ссылки
+const messageText = encodeURIComponent('🎉 Присоединяйтесь к нашему проекту и получайте бонусы!');
+document.getElementById('forwardButton').addEventListener('click', () => {
+  const referralLink = `https://t.me/ProjectAprilBot/start?startapp=id${user.id}`;
+  utils.openTelegramLink(
+    `https://t.me/share/url?url=${referralLink}&text=${messageText}`
+  );
+});
